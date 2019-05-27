@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -30,8 +31,11 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.bind(objects.get(i));
+        Object object = objects.get(i);
+        viewHolder.bind(object);
     }
+
+
 
     @NonNull
     @Override
@@ -41,7 +45,10 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         return new ViewHolder(viewDataBinding);
     }
 
-
+    public void reSetList(List<Object> objects) {
+        this.objects = objects;
+        notifyDataSetChanged();
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder{
 

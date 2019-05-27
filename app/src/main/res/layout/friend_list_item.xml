@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="obj"
+            type="com.example.chatroom.chatActivity.viewModel.dataModel.Friend" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:translationZ="12dp"
+        app:cardUseCompatPadding="true"
+        app:cardBackgroundColor="#e1e1e1"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_marginStart="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="25sp"
+                android:text="@{obj.name,default=Name}"/>
+
+            <TextView
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="25sp"
+                android:text="@{String.valueOf(obj.account),default=Account}"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</layout>

@@ -6,8 +6,10 @@
     tools:context=".chatActivity.view.fragment.FriendListFragment">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/friend_frag_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:listitem="@layout/friend_list_item">
     </android.support.v7.widget.RecyclerView>
 
 </FrameLayout>
