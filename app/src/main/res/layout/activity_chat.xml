@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="drawerModel"
+            type="com.example.chatroom.chatActivity.viewModel.DrawerModel"/>
+        <variable
+            name="friendListModel"
+            type="com.example.chatroom.chatActivity.viewModel.FriendListModel" />
+        <variable
+            name="messageListModel"
+            type="com.example.chatroom.chatActivity.viewModel.MessageListModel" />
+    </data>
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:openDrawer="start">
+
+        <include
+            layout="@layout/app_bar_chat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/nav_header_chat"
+            app:menu="@menu/activity_chat_drawer" />
+
+    </android.support.v4.widget.DrawerLayout>
+</layout>
