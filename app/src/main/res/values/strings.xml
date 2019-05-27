@@ -13,6 +13,10 @@
     <string name="message_list">消息列表</string>
     <string name="friend_list">好友列表</string>
     <string name="chat">聊天</string>
-
+    <string name="log_in_accout">登陆</string>
+    <string name="register_accout">点击注册</string>
+    <string name="no_account">没有帐号？</string>
+    <string name="password">密码</string>
+    <string name="password_again">确认密码</string>
 
 </resources>
