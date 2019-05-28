@@ -16,12 +16,22 @@ import com.example.chatroom.chatActivity.view.LoginActivity;
 import com.example.chatroom.chatActivity.view.RegisterActivity;
 import com.example.chatroom.databinding.ActivityLoginBinding;
 
+/**
+ *  author ：ski
+ *  登陆界面的viewModel
+ *  负责登陆和跳转到注册界面的工作
+ *
+ */
 public class LogInModel {
 
     private static final String TAG = "LogInModel";
     private ActivityLoginBinding activityLoginBinding;
     private Context context;
 
+
+    /**
+     * 登陆用方法，和登陆按钮绑定
+     */
     public void LogIn(){
         Log.d(TAG, "LogIn: start log in");
         // activityLoginBinding.liAccount.getText();
@@ -34,6 +44,9 @@ public class LogInModel {
         // MyApplication.getContext().startActivity(intent);
     }
 
+    /**
+     * 注册用方法，和注册按钮绑定
+     */
     public  void register(){
         context = LoginActivity.getLoginActivity();
         Intent intent = new Intent(context, RegisterActivity.class);
