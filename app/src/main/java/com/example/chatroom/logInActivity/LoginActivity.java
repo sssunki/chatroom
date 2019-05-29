@@ -1,33 +1,27 @@
-package com.example.chatroom.chatActivity.view;
+package com.example.chatroom.logInActivity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.chatroom.R;
-import com.example.chatroom.chatActivity.viewModel.LogInModel;
 import com.example.chatroom.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private ActivityLoginBinding activityLoginBinding;
-    private LogInModel logInModel;
-    private static Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this;
+        ActivityLoginBinding activityLoginBinding;
+        LogInModel logInModel;
         setContentView(R.layout.activity_login);
         activityLoginBinding =
                 DataBindingUtil.setContentView(this,R.layout.activity_login);
-        logInModel = new LogInModel();
+        logInModel = new LogInModel(this, activityLoginBinding);
         activityLoginBinding.setLoginModel(logInModel);
     }
 
-    public static Context getLoginActivity(){
-        return context;
-    }
 }
