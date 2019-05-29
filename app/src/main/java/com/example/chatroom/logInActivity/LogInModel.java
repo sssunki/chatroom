@@ -1,22 +1,14 @@
-package com.example.chatroom.chatActivity.viewModel;
+package com.example.chatroom.logInActivity;
 
 
 import android.app.Activity;
-import android.app.Application;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.databinding.DataBindingUtil;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.widget.Toast;
 
-import com.example.chatroom.R;
-import com.example.chatroom.Utils.MyApplication;
 import com.example.chatroom.chatActivity.view.ChatActivity;
-import com.example.chatroom.chatActivity.view.LoginActivity;
-import com.example.chatroom.chatActivity.view.RegisterActivity;
+import com.example.chatroom.registerActivity.RegisterActivity;
 import com.example.chatroom.databinding.ActivityLoginBinding;
 
 /**
@@ -29,19 +21,21 @@ public class LogInModel {
 
     private static final String TAG = "LogInModel";
     private ActivityLoginBinding activityLoginBinding;
-    private Context context;
+    private Activity context;
 
     private String account;
     private String password;
 
+    public LogInModel(Activity activity, ActivityLoginBinding activityLoginBinding){
+        this.activityLoginBinding  = activityLoginBinding;
+        context = activity;
+    }
+
     /**
      * 登陆用方法，和登陆按钮绑定
      */
-    public void LogIn(){
+    public void LogIn() {
         Log.d(TAG, "LogIn: start log in");
-        context = LoginActivity.getLoginActivity();  // 获取loginactivity实例
-        activityLoginBinding = LoginActivity.getActivityLoginBinding();
-
 
         // 判断帐号密码栏是否为空
         if(activityLoginBinding.liAccount.getText().length() == 0){
@@ -69,7 +63,6 @@ public class LogInModel {
      * 注册用方法，和注册按钮绑定
      */
     public  void register(){
-        context = LoginActivity.getLoginActivity();
         Intent intent = new Intent(context, RegisterActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);

@@ -1,4 +1,4 @@
-package com.example.chatroom.RegisterActivity;
+package com.example.chatroom.registerActivity;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -10,24 +10,18 @@ import com.example.chatroom.databinding.ActivityRegisterBinding;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    public static ActivityRegisterBinding mActivityRegisterBinding;
-    public static Context registerActivity;
-    private RegisterModel mRegisterModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityRegisterBinding mActivityRegisterBinding;
+        RegisterModel mRegisterModel;
         mActivityRegisterBinding = DataBindingUtil.setContentView(this, R.layout.activity_register);
-        registerActivity = this;
-        mRegisterModel = new RegisterModel();
+        mRegisterModel = new RegisterModel(this, mActivityRegisterBinding);
         mActivityRegisterBinding.setRegisterModel(mRegisterModel);
     }
 
-    public static ActivityRegisterBinding getmActivityRegisterBinding() {
-        return mActivityRegisterBinding;
-    }
-
-    public static Context getContext() {
-        return registerActivity;
+    @Override
+    public void finish() {
+        super.finish();
     }
 }

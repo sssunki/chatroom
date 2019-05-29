@@ -4,20 +4,20 @@
 
     <data>
         <import type="com.example.chatroom.chatActivity.viewModel.dataModel.Account" />
-        <import type="com.example.chatroom.chatActivity.viewModel.LogInModel" />
+        <import type="com.example.chatroom.logInActivity.LogInModel" />
         <variable
             name="account"
             type="Account" />
         <variable
             name="loginModel"
-            type="LogInModel" />
+            type="com.example.chatroom.logInActivity.LogInModel" />
     </data>
 
     <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".chatActivity.view.LoginActivity">
+        tools:context=".logInActivity.LoginActivity">
 
         <EditText
             android:id="@+id/li_account"

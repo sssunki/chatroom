@@ -11,14 +11,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".chatActivity.view.RegisterActivity"
+            android:name=".registerActivity.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.REGISTER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".chatActivity.view.LoginActivity"
+            android:name=".logInActivity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

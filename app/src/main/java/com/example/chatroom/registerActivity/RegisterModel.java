@@ -1,7 +1,9 @@
-package com.example.chatroom.RegisterActivity;
+package com.example.chatroom.registerActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.chatroom.logInActivity.LoginActivity;
@@ -18,19 +20,22 @@ import com.example.chatroom.databinding.ActivityRegisterBinding;
 public class RegisterModel {
 
     private ActivityRegisterBinding mActivityRegisterBinding;
-    private Context mRegisterActivtiy;
+    private Activity mRegisterActivtiy;
 
     private String account;
     private String password;
     private String nickName;
+
+    public RegisterModel(Activity activity,  ActivityRegisterBinding activityRegisterBinding) {
+        this.mActivityRegisterBinding = activityRegisterBinding;
+        this.mRegisterActivtiy = activity;
+    }
 
     /**
      * 注册用方法，和注册按钮绑定
      */
 
     public void register(){
-        mActivityRegisterBinding = RegisterActivity.getmActivityRegisterBinding();
-        mRegisterActivtiy = RegisterActivity.getContext();
         getRegisterData();
         postDataToServer();
         backToLogIn();
@@ -59,7 +64,6 @@ public class RegisterModel {
     }
 
     private void backToLogIn(){
-        Intent intent = new Intent(mRegisterActivtiy, LoginActivity.class);
-        mRegisterActivtiy.startActivity(intent);
+        mRegisterActivtiy.finish();
     }
 }
