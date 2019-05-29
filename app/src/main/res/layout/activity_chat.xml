@@ -5,14 +5,8 @@
 
     <data>
         <variable
-            name="drawerModel"
-            type="com.example.chatroom.chatActivity.viewModel.DrawerModel"/>
-        <variable
-            name="friendListModel"
-            type="com.example.chatroom.chatActivity.viewModel.FriendListModel" />
-        <variable
-            name="messageListModel"
-            type="com.example.chatroom.chatActivity.viewModel.MessageListModel" />
+            name="user"
+            type="com.example.chatroom.chatActivity.viewModel.dataModel.User" />
     </data>
 
     <android.support.v4.widget.DrawerLayout
@@ -33,7 +27,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
-            app:headerLayout="@layout/nav_header_chat"
             app:menu="@menu/activity_chat_drawer" />
 
     </android.support.v4.widget.DrawerLayout>

@@ -1,6 +1,5 @@
 package com.example.chatroom.chatActivity.viewModel.dataModel;
 
-import android.databinding.Bindable;
 
 public class Account {
     private String nickName;

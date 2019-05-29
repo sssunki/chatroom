@@ -3,36 +3,31 @@ package com.example.chatroom.chatActivity.view.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.chatroom.R;
-import com.example.chatroom.chatActivity.viewModel.dataModel.Friend;
 
-import java.util.ArrayList;
 import java.util.List;
 
+public class MessageContactListFragment<T> extends Fragment implements ListInterface<T>{
 
-public class FriendListFragment<T> extends Fragment implements ListInterface<T>{
-
-    public FriendListFragment() {
+    public MessageContactListFragment() {
         // Required empty public constructor
     }
 
-    private FriendFragmentInteraction interaction;
+    private MessageContactFragmentInteraction interaction;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof FriendListFragment.FriendFragmentInteraction) {
-            interaction = (FriendFragmentInteraction)context;
-            recycleViewAdapter = new RecycleViewAdapter<>(interaction.getFriendList(), R.layout.friend_list_item);
+        if (context instanceof MessageContactFragmentInteraction) {
+            interaction = (MessageContactFragmentInteraction) context;
+            recycleViewAdapter = new RecycleViewAdapter<>(interaction.getMessageContactLit(), R.layout.message_contact_list_tiem);
         }
     }
 
@@ -40,8 +35,8 @@ public class FriendListFragment<T> extends Fragment implements ListInterface<T>{
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_friend_list, container, false);
-        recyclerView = view.findViewById(R.id.friend_frag_recycler);
+        View view = inflater.inflate(R.layout.fragment_message_contact_list, container, false);
+        recyclerView = view.findViewById(R.id.message_contact_frg_recycler);
         initRecycler();
         return view;
     }
@@ -60,16 +55,16 @@ public class FriendListFragment<T> extends Fragment implements ListInterface<T>{
 
     public void addItemListener(ItemListener<T> itemListener) {
         if (recycleViewAdapter != null)
-        recycleViewAdapter.setItemListener(itemListener);
+            recycleViewAdapter.setItemListener(itemListener);
     }
 
     @Override
-    public void setList(List<T> friendList) {
+    public void setList(List<T> messageContacts) {
         if (recycleViewAdapter != null)
-        recycleViewAdapter.reSetList(friendList);
+            recycleViewAdapter.reSetList(messageContacts);
     }
 
-    public interface FriendFragmentInteraction {
-        List getFriendList();
+    public interface MessageContactFragmentInteraction {
+        List getMessageContactLit();
     }
 }

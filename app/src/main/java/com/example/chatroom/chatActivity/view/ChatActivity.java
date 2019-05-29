@@ -1,11 +1,13 @@
 package com.example.chatroom.chatActivity.view;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -16,13 +18,45 @@ import android.support.v7.widget.Toolbar;
 import com.example.chatroom.R;
 import com.example.chatroom.chatActivity.view.fragment.ChatFragment;
 import com.example.chatroom.chatActivity.view.fragment.FriendListFragment;
-import com.example.chatroom.chatActivity.view.fragment.MessageListFragment;
+import com.example.chatroom.chatActivity.view.fragment.ItemListener;
+import com.example.chatroom.chatActivity.view.fragment.ListInterface;
+import com.example.chatroom.chatActivity.view.fragment.MessageContactListFragment;
+import com.example.chatroom.chatActivity.viewModel.ChatViewModel;
+import com.example.chatroom.chatActivity.viewModel.ChatViewModelInterface;
+import com.example.chatroom.chatActivity.viewModel.dataModel.Friend;
+import com.example.chatroom.chatActivity.viewModel.dataModel.Message;
+import com.example.chatroom.chatActivity.viewModel.dataModel.MessageContact;
+import com.example.chatroom.databinding.NavHeaderChatBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ChatViewInterface
+        , FriendListFragment.FriendFragmentInteraction, MessageContactListFragment.MessageContactFragmentInteraction {
+
+    //ChatActivity的功能
+    @Override
+    public void setFriendList(List<Friend> friendList) {
+        this.friendListView.setList(friendList);
+    }
+
+    @Override
+    public void setMessageContactList(List<MessageContact> messageContactList) {
+
+    }
+
+    @Override
+    public void setMessageList(List<Message> messages) {
+
+    }
+
+    @Override
+    public void scrollToChatWindow() {
+
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +72,29 @@ public class ChatActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         initViewPager();
+        chatViewModel = new ChatViewModel(this);
+        bindingNavigationView(navigationView);
     }
 
+    //处理navigationView的dataBinding
+    private void bindingNavigationView(NavigationView navigationView) {
+        NavHeaderChatBinding navHeaderChatBinding = NavHeaderChatBinding.inflate(LayoutInflater.from(navigationView.getContext()));
+        navHeaderChatBinding.setUser(chatViewModel.getUser());
+        navHeaderChatBinding.executePendingBindings();
+        navigationView.addHeaderView(navHeaderChatBinding.getRoot());
+    }
+
+    //ViewMode
+    private ChatViewModelInterface chatViewModel;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //chatViewModel.onViewInitFinished();
+        afterFragmentViewCreated();
+    }
+
+    //view
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -83,6 +138,10 @@ public class ChatActivity extends AppCompatActivity
         return true;
     }
 
+    //fragment
+    private ListInterface<Friend> friendListView;
+    private ListInterface<MessageContact> messageContactListView;
+
     private void initViewPager() {
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.view_pager);
@@ -92,12 +151,57 @@ public class ChatActivity extends AppCompatActivity
         titles.add(getString(R.string.chat));
         for (String string : titles) tabLayout.addTab(tabLayout.newTab().setText(string));
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new FriendListFragment());
-        fragments.add(new MessageListFragment());
+        FriendListFragment<Friend> friendListFragment = new FriendListFragment<>();
+        this.friendListView = friendListFragment;
+        fragments.add(friendListFragment);
+        MessageContactListFragment<MessageContact> messageContactListFragment = new MessageContactListFragment<>();
+        this.messageContactListView = messageContactListFragment;
+        fragments.add(messageContactListFragment);
         fragments.add(new ChatFragment());
         FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(),fragments, titles);
         viewPager.setAdapter(fragmentAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    //当fragment的view生成后
+    private void afterFragmentViewCreated() {
+        this.friendListView.addItemListener(new FriendItemListener());
+    }
+
+
+    //生成fragment的回调
+    @Override
+    public List getFriendList() {
+        return chatViewModel.getFriendList();
+    }
+
+    @Override
+    public List getMessageContactLit() {
+        return chatViewModel.getMessageContactList();
+    }
+
+    //FriendFragment和MessageContactFragment中，item点击的回调。
+    class FriendItemListener implements ItemListener<Friend> {
+        @Override
+        public void onClick(Friend item) {
+
+        }
+
+        @Override
+        public boolean onLongClick(Friend item) {
+            return false;
+        }
+    }
+
+    class MessageContactItemListener implements ItemListener<MessageContact> {
+        @Override
+        public void onClick(MessageContact item) {
+
+        }
+
+        @Override
+        public boolean onLongClick(MessageContact item) {
+            return false;
+        }
+    }
 }
