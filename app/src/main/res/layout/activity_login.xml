@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.example.chatroom.chatActivity.viewModel.dataModel.Account" />
+        <import type="com.example.chatroom.logInActivity.LogInAccount" />
         <import type="com.example.chatroom.logInActivity.LogInModel" />
         <variable
-            name="account"
-            type="Account" />
+            name="logInAccount"
+            type="LogInAccount" />
         <variable
             name="loginModel"
             type="com.example.chatroom.logInActivity.LogInModel" />
@@ -23,7 +23,8 @@
             android:id="@+id/li_account"
             android:layout_above="@id/li_password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@{logInAccount.account}"/>
 
         <EditText
             android:id="@+id/li_password"

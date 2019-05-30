@@ -13,11 +13,15 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityRegisterBinding mActivityRegisterBinding;
-        RegisterModel mRegisterModel;
-        mActivityRegisterBinding = DataBindingUtil.setContentView(this, R.layout.activity_register);
-        mRegisterModel = new RegisterModel(this, mActivityRegisterBinding);
-        mActivityRegisterBinding.setRegisterModel(mRegisterModel);
+        init();
+    }
+
+    private void init() {
+        ActivityRegisterBinding activityRegisterBinding =
+                DataBindingUtil.setContentView(this, R.layout.activity_register);
+        ;
+        RegisterModel registerModel = new RegisterModel(this, activityRegisterBinding);
+        activityRegisterBinding.setRegisterModel(registerModel);
     }
 
     @Override

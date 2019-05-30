@@ -10,18 +10,24 @@ import com.example.chatroom.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityLoginBinding activityLoginBinding;
-        LogInModel logInModel;
-        setContentView(R.layout.activity_login);
-        activityLoginBinding =
-                DataBindingUtil.setContentView(this,R.layout.activity_login);
-        logInModel = new LogInModel(this, activityLoginBinding);
-        activityLoginBinding.setLoginModel(logInModel);
+        init();
     }
 
+    private void init() {
+        ActivityLoginBinding activityLoginBinding =
+                DataBindingUtil.setContentView(this,R.layout.activity_login);
+        LogInAccount logInAccount = new LogInAccount();
+        LogInModel logInModel = new LogInModel(this, activityLoginBinding, logInAccount);
+        activityLoginBinding.setLoginModel(logInModel);
+        activityLoginBinding.setLogInAccount(logInAccount);
+        logInModel.getSavedAccount();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+    }
 }

@@ -26,7 +26,7 @@ public class RegisterModel {
     private String password;
     private String nickName;
 
-    public RegisterModel(Activity activity,  ActivityRegisterBinding activityRegisterBinding) {
+    RegisterModel(Activity activity,  ActivityRegisterBinding activityRegisterBinding) {
         this.mActivityRegisterBinding = activityRegisterBinding;
         this.mRegisterActivtiy = activity;
     }
@@ -34,33 +34,39 @@ public class RegisterModel {
     /**
      * 注册用方法，和注册按钮绑定
      */
-
-    public void register(){
-        getRegisterData();
-        postDataToServer();
-        backToLogIn();
+    public void register() {
+        if (getRegisterData()) {
+            if (postDataToServer())
+                backToLogIn();
+        }
     }
 
-    private void getRegisterData(){
+    private boolean getRegisterData(){
+        // 检验信息是否为空
         if( (mActivityRegisterBinding.registerAccount.getText().length() == 0)
                 || (mActivityRegisterBinding.registerName.getText().length() == 0)
                 || (mActivityRegisterBinding.registerPassword.getText().length() == 0)
                 || (mActivityRegisterBinding.registerPasswordAgain.getText().length() == 0)){
             Toast.makeText(mRegisterActivtiy,"请完善信息",Toast.LENGTH_SHORT).show();
+            return false;
         }else {
             if(!mActivityRegisterBinding.registerPassword.getText()
                     .equals(mActivityRegisterBinding.registerPasswordAgain.getText())){
                 Toast.makeText(mRegisterActivtiy,"两次输入的密码不一致",Toast.LENGTH_SHORT).show();
+                return false;
             }else {
+                // 获取信息
                 account = mActivityRegisterBinding.registerAccount.getText().toString();
                 password = mActivityRegisterBinding.registerPassword.getText().toString();
                 nickName = mActivityRegisterBinding.registerName.getText().toString();
+                return true;
             }
         }
     }
 
     private boolean postDataToServer(){
-        return false;
+        int code;
+        return true;
     }
 
     private void backToLogIn(){

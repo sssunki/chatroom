@@ -4,9 +4,11 @@ package com.example.chatroom.logInActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.content.SharedPreferences;
+import android.databinding.ObservableField;
 import android.widget.Toast;
 
+import com.example.chatroom.Bean.User;
 import com.example.chatroom.chatActivity.view.ChatActivity;
 import com.example.chatroom.registerActivity.RegisterActivity;
 import com.example.chatroom.databinding.ActivityLoginBinding;
@@ -20,52 +22,77 @@ import com.example.chatroom.databinding.ActivityLoginBinding;
 public class LogInModel {
 
     private static final String TAG = "LogInModel";
-    private ActivityLoginBinding activityLoginBinding;
-    private Activity context;
+    private ActivityLoginBinding mActivityLoginBinding;
+    private Activity logInActivity;
+    private LogInAccount account;
 
-    private String account;
-    private String password;
 
-    public LogInModel(Activity activity, ActivityLoginBinding activityLoginBinding){
-        this.activityLoginBinding  = activityLoginBinding;
-        context = activity;
+     LogInModel(Activity logInActivity, ActivityLoginBinding activityLoginBinding, LogInAccount account){
+        this.mActivityLoginBinding = activityLoginBinding;
+        this.logInActivity = logInActivity;
+        this.account = account;
     }
 
     /**
      * 登陆用方法，和登陆按钮绑定
      */
     public void LogIn() {
-        Log.d(TAG, "LogIn: start log in");
-
-        // 判断帐号密码栏是否为空
-        if(activityLoginBinding.liAccount.getText().length() == 0){
-            Toast.makeText(context,"请输入帐号",Toast.LENGTH_SHORT).show();
-        }else {
-            if(activityLoginBinding.liPassword.getText().length() == 0){
-                Toast.makeText(context,"请输入密码",Toast.LENGTH_SHORT).show();
-            }else {
-                // 发送帐号密码信息
-                account = activityLoginBinding.liAccount.getText().toString();
-                password = activityLoginBinding.liPassword.getText().toString();
-
-                // 服务器返回是否正确
-
-                // 进入聊天界面
-                Intent intent = new Intent(context, ChatActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+        if (getData()){
+            saveAccount();
+            if (postDataToServer()){
+                goToChat();
             }
         }
-
     }
+
+
+    private boolean getData(){
+        if(mActivityLoginBinding.liAccount.getText().length() == 0 ||
+            (mActivityLoginBinding.liPassword.getText().length() == 0)){
+            Toast.makeText(logInActivity,"请完善信息",Toast.LENGTH_SHORT).show();
+            return false;
+        }else {
+            account = new LogInAccount(mActivityLoginBinding.liAccount.getText().toString(),
+                    mActivityLoginBinding.liPassword.getText().toString());
+            return true;
+        }
+    }
+
+    private boolean postDataToServer(){
+        return true;
+    }
+
+    private void goToChat(){
+        Intent intent = new Intent(logInActivity, ChatActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        logInActivity.startActivity(intent);
+        logInActivity.finish();
+    }
+
 
     /**
-     * 注册用方法，和注册按钮绑定
+     * 注册用方法，和注册按钮绑定，用于跳转到注册界面
      */
     public  void register(){
-        Intent intent = new Intent(context, RegisterActivity.class);
+        Intent intent = new Intent(logInActivity, RegisterActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+        logInActivity.startActivity(intent);
     }
 
+    private void saveAccount(){
+        SharedPreferences sharedPreferences = logInActivity.getSharedPreferences("user", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.putString("account",mActivityLoginBinding.liAccount.getText().toString());
+        editor.apply();
+    }
+
+    void getSavedAccount(){
+        SharedPreferences sharedPreferences = logInActivity.getSharedPreferences("user",Context.MODE_PRIVATE);
+        if(sharedPreferences.contains("account")){
+            account.setUserName(new ObservableField<String>(
+                    sharedPreferences.getString("acconut", " ")));
+            account.getUserName().set(sharedPreferences.getString("account"," "));
+        }
+    }
 }
